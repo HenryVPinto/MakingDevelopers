@@ -16,7 +16,7 @@ production: &default
       stylusPrecompile: true
       compress: true
   app:
-    default: blog
+    default: home
   languages:
     default: en
     list: [en, es]

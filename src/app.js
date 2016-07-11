@@ -7,7 +7,7 @@ import exphbs from 'express-handlebars';
 import stylus from 'stylus';
 
 import config from './lib/config';
-import hbsHelpers from './lib/helpers/handlebars';
+import hbsHelpers from './lib/handlebars';
 
 import routes from './routes/index';
 import users from './routes/users';

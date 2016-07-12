@@ -1,3 +1,4 @@
+import $config from './config';
 import crypto from 'crypto';
 
 const salt = $config().security.secret;

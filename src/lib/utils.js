@@ -118,7 +118,7 @@ function randomCode(max, charSet) {
   max = max || 12;
   charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (const i = 0; i < max; i++) {
+  for (let i = 0; i < max; i++) {
     randomPoz = Math.floor(Math.random() * charSet.length);
     randomCode += charSet.substring(randomPoz, randomPoz + 1);
   }

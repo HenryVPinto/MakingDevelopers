@@ -1,6 +1,4 @@
-const availableLanguages = $config().languages.list.join('|');
-const defaultApp = $config().app.default;
-
+import $config from './lib/config';
 import i18n from './lib/i18n';
 import utils from './lib/utils';
 
@@ -8,7 +6,7 @@ import homeController from './app/home/home.controller';
 import dashboardController from './app/dashboard/dashboard.controller';
 
 export default (app) => {
-  const defaultController = getDefaultController(defaultApp);
+  const availableLanguages = $config().languages.list.join('|');
 
   // Loading isMobile, basePath, currentLanguage and __
   app.use((req, res, next) => {
@@ -16,7 +14,7 @@ export default (app) => {
     res.locals.basePath = res.locals.config.basePath;
     res.locals.config.basePath = `${$config().baseUrl}${i18n.getLanguagePath(req.url)}`;
     res.locals.currentLanguage = i18n.getCurrentLanguage(req.url);
-    res.locals.isMobile = utils.isMobile(req.headers['user-agent']);
+    res.locals.isMobile = utils.Device.isMobile(req.headers['user-agent']);
 
     next();
   });
@@ -33,9 +31,8 @@ export default (app) => {
   });
 
   // Controllers dispatch
-  app.use('/', defaultController);
-  app.use(`/:language(${availableLanguages})`, defaultController);
-  app.use(`/:language(${availableLanguages})/home`, homeController);
+  app.use('/', homeController);
+  app.use(`/:language(${availableLanguages})`, homeController);
   app.use(`/:language(${availableLanguages})/dashboard`, dashboardController);
 
   // catch 404 and forward to error handler
@@ -65,14 +62,3 @@ export default (app) => {
     });
   });
 };
-
-function getDefaultController(app) {
-  switch (app) {
-    case 'home':
-      return homeController;
-    case 'dashboard':
-      return dashboardController;
-    default:
-      return homeController;
-  }
-}
